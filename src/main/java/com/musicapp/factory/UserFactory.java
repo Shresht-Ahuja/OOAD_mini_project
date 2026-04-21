@@ -33,6 +33,9 @@ public class UserFactory {
         if ("ADMIN".equalsIgnoreCase(role)) {
             System.out.println("[FACTORY] Creating Admin: " + name);
             return new Admin(userId, name, email, password, "ADMIN");
+        } else if ("ARTIST".equalsIgnoreCase(role)) {
+            System.out.println("[FACTORY] Creating Artist: " + name);
+            return new User(userId, name, email, password, "ARTIST");
         }
         System.out.println("[FACTORY] Creating User: " + name);
         return new User(userId, name, email, password, "USER");

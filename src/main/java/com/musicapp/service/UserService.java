@@ -21,10 +21,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ArtistService artistService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ArtistService artistService) {
         this.userRepository = userRepository;
+        this.artistService = artistService;
     }
 
     /**
@@ -37,6 +39,12 @@ public class UserService {
         }
         int id = userRepository.nextId();
         User user = UserFactory.createUser(id, name, email, password, role);
+        
+        // If the user is an artist, create an Artist profile for them automatically
+        if ("ARTIST".equalsIgnoreCase(role)) {
+            artistService.addArtist(name, "New artist profile for " + name);
+        }
+        
         return userRepository.save(user);
     }
 
